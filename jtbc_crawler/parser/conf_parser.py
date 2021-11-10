@@ -12,9 +12,14 @@ class Parser(metaclass=Singleton):
         self._news_ranking_url = None
         if os.path.isfile(conf_path):
             self._conf_parser.read(conf_path)
-            self._naver_news_ranking_url = self._conf_parser.get('crawling', 'naver_news_ranking_url') if \
-                self._conf_parser.get('crawling', 'naver_news_ranking_url') else None
+            self._naver_news_ranking_url = self._conf_parser.get("crawling", "naver_news_ranking_url") if \
+                self._conf_parser.get("crawling", "naver_news_ranking_url") else None
+            self._publishers = self._conf_parser.get("crawling", "publishers").replace(" ", "").split(",")
             # print(self._news_ranking_url)
+
+    @property
+    def publishers(self):
+        return self._publishers
 
     @property
     def naver_news_ranking_url(self):
@@ -22,4 +27,5 @@ class Parser(metaclass=Singleton):
 
 if __name__ == "__main__":
     p = Parser()
-    print(p.naver_news_ranking_url)
+    print("naver news ranking_url: ", p.naver_news_ranking_url)
+    print("publishers: ", p.publishers)
