@@ -19,9 +19,9 @@ class ChromeDriver(metaclass=Singleton):
             options = Options()
             # chrome://version/ 을 통해서 확인 가능하며, 버전이 60이상일 경우, headless(창 없는) 모드 적용 가능
             options.headless = False
-            options.add_argument('window-size=1920x1080')
-            options.add_argument('disable-gpu')
-            options.add_experimental_option('excludeSwitches', ['enable-logging'])
+            options.add_argument("window-size=1920x1080")
+            options.add_argument("disable-gpu")
+            options.add_experimental_option("excludeSwitches", ["enable-logging"])
 
 
             # 현재 excutable_path는 deprecated됨
