@@ -1,3 +1,7 @@
+import sys
+for s in sys.path:
+    print(s)
+
 from jtbc_crawler.driver.chrome_driver import ChromeDriver
 from jtbc_crawler.parser.conf_parser import Parser
 
@@ -8,7 +12,7 @@ class Crawler:
         self.browser = driver.browser if driver else None
 
     def run(self):
-        self.browser.get(self.parser.news_ranking_url)
+        self.browser.get(self.parser.naver_news_ranking_url)
 
         self.browser.find_elements_by_class_name("rankingnews_box")
 
