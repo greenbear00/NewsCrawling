@@ -38,6 +38,8 @@ class NaverRankingNews(ChromeDriver, metaclass=Singleton):
 
     def _go_publisher(self, url:str, publishers:list):
 
+        info = self.browser.find_element(By.XPATH, "/html/body/div/div[4]/div[1]/div")
+
         for publisher_name in publishers:
             if not self.publisher:
                 self.browser.get(url)
@@ -51,31 +53,38 @@ class NaverRankingNews(ChromeDriver, metaclass=Singleton):
             self._publisher = {}
 
     def _load_rankingnews_list(self):
+        """
+        특정 언론사 별 많이 본 뉴스(왼쪽)
+        :return:
+        """
+
         ranking_news_em = self.browser.find_element(By.XPATH, "/html/body/div/div[4]/div[2]/div[2]/ul")
 
-        # <a href="/main/ranking/read.naver?mode=LSD&amp;mid=shm&amp;sid1=001&amp;oid=437&amp;aid=0000280578&amp;rankingType=RANKING" class="list_img nclicks('RBP.drnknws')">
-        #                                    <img src="https://mimgnews.pstatic.net/image/origin/437/2021/11/11/280578.jpg?type=nf74_74" width="74" height="74" alt="" onerror="this.src='https://ssl.pstatic.net/static.news/image/news/errorimage/noimage_74x74_1.png';">
-        #
-        #                                </a>
-        # /html/body/div/div[4]/div[2]/div[2]/ul/li[1]/div/a
-        # /html/body/div/div[4]/div[2]/div[2]/ul/li[2]/div/a
-        ranking_news_list_em = ranking_news_em.find_element(By.XPATH, "/html/body/div/div[4]/div[2]/div[2]/ul")
-
-        ranking_news_size = len(ranking_news_list_em)
+        # 많이 본 뉴스 <ul> 밑에 있는 <li></li>에 해당하는 부
+        list_content = ranking_news_em.find_elements(By.CLASS_NAME, "list_content")
+        ranking_news_size = len(list_content)
         for index in range(1, ranking_news_size+1):
 
-            a_href = ranking_news_list_em.find_element(By.XPATH, f"/html/body/div/div[4]/div[2]/div[2]/ul/li["
+            # ranking index에 해당하는 a href이며, text가 뉴스 title
+            a_href = self.browser.find_element(By.XPATH, f"/html/body/div/div[4]/div[2]/div[2]/ul/li["
                                                             f"{str(index)}]/div/a")
-            print(a_href.text)
+            print(f"[{index}] {a_href.text}")
+            # ranking index에 해당하는 span이며, view 정보를 집계
+            a_span = self.browser.find_element(By.XPATH, f"/html/body/div/div[4]/div[2]/div[2]/ul/li[{str(index)}]/div/span[2]")
+            print(f"\t- view: {a_span.text}")
             a_href.click()
-            # articleTitle_em = self.browser.find_element(By.XPATH, "/html/body/div[2]/table/tbody/tr/td[1]/div/div["
-            #                                                       "1]/div[""3]/h3")
-            # print("\trticleTitle_em.text")
+
+            a_news_timestamp = self.browser.find_elements(By.CLASS_NAME, "t11")
+            a_news_created_time = a_news_timestamp[0].text
+            a_news_modified_time = a_news_timestamp[1].text if len(a_news_timestamp)>1 else None
+            print(f"\t- created time: {a_news_created_time}")
+            print(f"\t- modified time: {a_news_modified_time}")
+            a_news_reaction = self.browser.find_element(By.XPATH, "/html/body/div[2]/table/tbody/tr/td[1]/div/div[1]/div[3]/div/div[3]/div[1]/div/a/span[3]")
+            a_news_comment = self.browser.find_element(By.CLASS_NAME, "lo_txt")
+            print(f"\t- reaction: {a_news_reaction.text}")
+            print(f"\t- comment: {a_news_comment.text}")
+
             self.browser.back()
-
-            ranking_news_list_em = self.browser.find_element(By.XPATH, "/html/body/div/div[4]/div[2]/div[2]/ul")
-
-
 
 
 
