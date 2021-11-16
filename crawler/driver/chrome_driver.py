@@ -23,7 +23,7 @@ class ChromeDriver(metaclass=Singleton):
             options.headless = False
             options.add_argument("window-size=1920x1080")
             options.add_argument("disable-gpu")
-            options.add_experimental_option("excludeSwitches, [enable-logging]")
+            options.add_experimental_option("excludeSwitches", ["enable-logging"])
 
 
             # 현재 excutable_path는 deprecated됨
