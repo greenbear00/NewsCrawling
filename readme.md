@@ -31,16 +31,12 @@ gpgkey=https://dl-ssl.google.com/linux/linux_signing_key.pub
 
 $ sudo yum install -y google-chrome-stable
 ```
-
 ### 2. python 가상환경에서 selenium 설치
 ```
 pip install selenium
 ```
-
 ### 3. chrome driver downalod
 crhome driver url = https://sites.google.com/a/chromium.org/chromedriver/downloads
-
-
 
 ## how to 스크랩
 ### 1. 스크랩 타겟
