@@ -1,9 +1,7 @@
-import sys
-for s in sys.path:
-    print(s)
 
-from jtbc_crawler.driver.chrome_driver import ChromeDriver
-from jtbc_crawler.parser.conf_parser import Parser
+
+from crawler.driver.chrome_driver import ChromeDriver
+from crawler.util.conf_parser import Parser
 
 class Crawler:
     def __init__(self):
