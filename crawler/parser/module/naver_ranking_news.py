@@ -107,12 +107,11 @@ class NaverRankingNews(CrawlerParser):
 			a_href = self.browser.find_element(By.XPATH,
 			                                   f"/html/body/div/div[4]/div[2]/div[2]/ul/li[{str(index)}]/div/a")
 			title = a_href.text
-			self.logger.info(f"\t- news_nm: {title}")
+
 			# ranking index에 해당하는 span이며, view 정보를 집계
 			a_span = self.browser.find_element(By.XPATH,
 			                                   f'//*[@id="wrap"]/div[4]/div[2]/div[2]/ul/li[{str(index)}]/div/span[2]')
 			view = int(a_span.text.replace(',','')) if a_span.text else None
-			self.logger.info(f"\t- view: {view}")
 			a_href.click()
 
 			# <a href="https://news.jtbc.joins.com/article/article.aspx?news_id=NB12033568" target="_blank"
@@ -121,6 +120,8 @@ class NaverRankingNews(CrawlerParser):
 			a_news_ori_href = a_news_href.get_property('href')
 			id = a_news_ori_href.split("/")[-1]
 			self.logger.info(f"[{index}] id = {id}")
+			self.logger.info(f"\t- news_nm: {title}")
+			self.logger.info(f"\t- view: {view}")
 			self.logger.info(f"\t- url: {a_news_ori_href}")
 			a_news_timestamp = self.browser.find_elements(By.CLASS_NAME, "t11")
 
