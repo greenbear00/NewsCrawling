@@ -32,7 +32,6 @@ gpgkey=https://dl-ssl.google.com/linux/linux_signing_key.pub
 $ sudo yum install -y google-chrome-stable
 ```
 
-
 ### 2. python 가상환경에서 selenium 설치
 ```
 pip install selenium
