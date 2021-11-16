@@ -1,3 +1,4 @@
 selenium==4.0.0
 apscheduler==3.8.1
 elasticsearch==7.14.0
+
