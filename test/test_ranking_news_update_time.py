@@ -38,6 +38,7 @@ def backgroundScheduler():
 	end_time = datetime.now()+timedelta(days=1, hours=1, minutes=10)
 
 	sched.start()
+	run()
 	print_joblist()
 
 
