@@ -93,7 +93,7 @@ class NaverRankingNews(CrawlerParser):
 	def _load_rankingnews_list(self, publichser_name: str) -> list:
 
 		a_publisher_info = []
-		publisher_key = PUBLISHERS.get(publichser_name)
+		# publisher_key = PUBLISHERS.get(publichser_name)
 
 		ranking_news_em = self.browser.find_element(By.XPATH, "/html/body/div/div[4]/div[2]/div[2]/ul")
 
@@ -111,7 +111,7 @@ class NaverRankingNews(CrawlerParser):
 			self.logger.info(f"\t- news_nm: {title}")
 			# ranking index에 해당하는 span이며, view 정보를 집계
 			a_span = self.browser.find_element(By.XPATH,
-			                                   f"/html/body/div/div[4]/div[2]/div[2]/ul/li[{str(index)}]/div/span[2]")
+			                                   f'//*[@id="wrap"]/div[4]/div[2]/div[2]/ul/li[{str(index)}]/div/span[2]')
 			view = int(a_span.text.replace(',','')) if a_span.text else None
 			self.logger.info(f"\t- view: {view}")
 			a_href.click()
@@ -130,11 +130,12 @@ class NaverRankingNews(CrawlerParser):
 				'%Y-%m-%dT%H:%M:%S+09:00') if len(a_news_timestamp) > 1 else None
 			self.logger.info(f"\t- created time: {a_news_created_time}")
 			self.logger.info(f"\t- modified time: {a_news_modified_time}")
-			a_news_reaction = self.browser.find_element(By.XPATH, "/html/body/div[2]/table/tbody/tr/td[1]/div/div["
-			                                                      "1]/div[3]/div/div[3]/div[1]/div/a/span[3]")
+			a_news_reaction = self.browser.find_element(By.XPATH,
+			                                   '//*[@id="main_content"]/div[1]/div[3]/div/div[3]/div[1]/div/a/span[3]')
 			a_news_comment = self.browser.find_element(By.CLASS_NAME, "lo_txt")
-			a_news_reaction_cnt = int(a_news_reaction.text.replace(',','')) if a_news_reaction.text else None
-			a_news_comment_cnt = int(a_news_comment.text.replace(',','')) if a_news_comment.text else None
+			a_news_reaction_cnt = None if not a_news_reaction.text else 0 if a_news_reaction.text=="공감" else int(a_news_reaction.text.replace(',',''))
+			a_news_comment_cnt = None if not a_news_comment.text else 0 if a_news_comment.text=="댓글" else int(
+				a_news_comment.text.replace(',',''))
 			self.logger.info(f"\t- reaction: {a_news_reaction_cnt}")
 			self.logger.info(f"\t- comment: {a_news_comment_cnt}")
 
