@@ -93,7 +93,6 @@ class NaverRankingNews(CrawlerParser):
 	def _load_rankingnews_list(self, publichser_name: str) -> list:
 
 		a_publisher_info = []
-		# publisher_key = PUBLISHERS.get(publichser_name)
 
 		ranking_news_em = self.browser.find_element(By.XPATH, "/html/body/div/div[4]/div[2]/div[2]/ul")
 
