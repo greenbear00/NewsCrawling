@@ -2,6 +2,7 @@
 
 ## 개발 준비사항 
 ### 1. install for selenium
+#### for osx
 osx 환경에서 cask, chrome driver를 install 해야 함
 참고: homebrew만 설치해서는 일반적으로 쓰는 GUI기반의 어플리케이션을 설치할 수 없으므로 cask를 설치해야 함
 ```
@@ -15,13 +16,30 @@ cp /usr/local/Caskroom/chromedriver/95.0.4638.54/chromedriver driver
 # 또한 osx 상 브라우저 신뢰가 필요하므로
 # brew info chromedriver를 통해서 chromedriver가 설치된 /usr/local/bin의 위치에서 아래 명령어 수행
 xattr -d com.apple.quarantine chromedriver
-
-
 ```
+#### for centos
+이전에 python 및 jdk8이상 설치 필요
+```
+$ sudo python3 -m pip install selenium
+$ sudo vi /etc/yum.repos.d/google-chrome.repo
+[google-chrome]
+name=google-chrome
+baseurl=http://dl.google.com/linux/chrome/rpm/stable/x86_64
+enabled=1
+gpgcheck=1
+gpgkey=https://dl-ssl.google.com/linux/linux_signing_key.pub
+
+$ sudo yum install -y google-chrome-stable
+```
+
 ### 2. python 가상환경에서 selenium 설치
 ```
 pip install selenium
 ```
+
+### 3. chrome driver downalod
+crhome driver url = https://sites.google.com/a/chromium.org/chromedriver/downloads
+
 
 
 ## how to 스크랩
