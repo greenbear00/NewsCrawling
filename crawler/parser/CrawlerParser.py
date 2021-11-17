@@ -4,6 +4,7 @@ from datetime import datetime
 from crawler.driver.chrome_driver import ChromeDriver
 from crawler.util.Logger import Logger
 import abc
+import os
 
 
 class CrawlerParser(metaclass=abc.ABCMeta):
@@ -21,8 +22,8 @@ class CrawlerParser(metaclass=abc.ABCMeta):
 		return self._is_enable
 
 	def __init__(self, url: str, publishers: list, the_date:datetime, is_enable: bool = True):
-		path = Path(__file__).parent.parent.parent
-		self.logger = Logger(file_name=self.__class__.__name__).logger
+		root_path = Path(__file__).parent.parent.parent
+		self.logger = Logger(path=os.path.join(root_path, "logs"), file_name=self.__class__.__name__).logger
 
 		driver = ChromeDriver()
 		self.browser = driver.browser
