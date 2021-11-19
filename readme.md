@@ -67,7 +67,7 @@ crhome driver url = https://sites.google.com/a/chromium.org/chromedriver/downloa
 ```
 [asmanager@jtbcv127 jnd-crawler-tmp2]$ chmod u+x driver/*
 [asmanager@jtbcv127 jnd-crawler-tmp2]$ chmod u+x script/*
-[asmanager@jtbcv127 jnd-crawler-tmp2]$ ./script/run.sh &
+[asmanager@jtbcv127 jnd-crawler-tmp2]$ ./script/naver_news_crawler.sh &
 [1] 39282
 [asmanager@jtbcv127 jnd-crawler-tmp2]$
 
@@ -79,8 +79,9 @@ job start
 [asmanager@jtbcv127 jnd-crawler-tmp2]$
 [asmanager@jtbcv127 jnd-crawler-tmp2]$
 [asmanager@jtbcv127 jnd-crawler-tmp2]$ ps -ef | grep run.sh
-asmanag+  39282   8979  0 15:10 pts/0    00:00:00 /bin/bash ./script/run.sh
+asmanag+  39282   8979  0 15:10 pts/0    00:00:00 /bin/bash ./script/naver_news_crawler.sh
 asmanag+  39421   8979  0 15:10 pts/0    00:00:00 grep --color=auto run.sh
+
 ```
 
 

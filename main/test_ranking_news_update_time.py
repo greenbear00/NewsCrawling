@@ -27,11 +27,11 @@ logger.info(f"start...{datetime.now().strftime('%Y-%m-%d %H:%M:%S.%s')}")
 def run():
 	the_date = datetime.now()
 	ranking_news = NaverRankingNews(url=p.naver_news_ranking_url, publishers=p.publishers,
-									the_date=the_date)
+	                           the_date=the_date)
 	# ne = NaverRankingElasticGenerator(**p.elastic_conf, shard=p.elastic_shard)
 
 	data = ranking_news.run()
-	# ne.write(the_date=the_date, data=data)
+	# ne.write(the_date=the_date, data = data)
 
 	print_joblist()
 

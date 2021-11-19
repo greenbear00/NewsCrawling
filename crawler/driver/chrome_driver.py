@@ -16,7 +16,6 @@ import sys
 #     "proxyType": "MANUAL"
 # }
 
-# class ChromeDriver(metaclass=Singleton):
 class ChromeDriver:
 
     @property
