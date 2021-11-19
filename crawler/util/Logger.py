@@ -8,7 +8,7 @@ class Logger(metaclass=Singleton):
 
     # # log_path = os.path.join(path, 'logs', '{}_{}.log'.format(file, datetime.today().strftime('%Y%m%d')))
     #         # log path: '/Users/jmac/project/jtbc_news_data/data-batch/main/logs/NewsSummary_20211018.log'
-    def __init__(self, path:str=None, file_name:str=None):
+    def __init__(self, path:Path=None, file_name:str=None):
         if path is None:
             path = os.path.join(Path(__file__).parent.parent.parent, "logs")
             # print(path)

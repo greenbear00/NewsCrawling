@@ -11,9 +11,14 @@
                 "enabled": true
             },
             "properties": {
-                "news_nm": {
+                "news_nm_keyword": {
                     "type": "text",
                     "fielddata": true
+                },"news_nm": {
+                    "type": "keyword"
+                },
+                "news_id": {
+                    "type": "keyword"
                 },
                 "url": {
                     "type": "keyword"
