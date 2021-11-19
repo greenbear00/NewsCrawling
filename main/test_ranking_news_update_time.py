@@ -9,10 +9,11 @@ from crawler.parser.module.naver_ranking_news import NaverRankingNews
 from datetime import datetime, timedelta
 import time
 from pathlib import Path
+import os
 
 sched = BackgroundScheduler(timezone="Asia/Seoul")
 root_path = Path(__file__).parent.parent
-logger = logger_factory = Logger(path=root_path, file_name="RankingNews_check_update_time").logger
+logger = logger_factory = Logger(path=os.path.join(root_path, "logs"), file_name="RankingNews_check_update_time").logger
 
 p = Parser()
 logger.info(f"start...{datetime.now().strftime('%Y-%m-%d %H:%M:%S.%s')}")
@@ -23,10 +24,10 @@ def run():
 	the_date = datetime.now()
 	ranking_news = NaverRankingNews(url=p.naver_news_ranking_url, publishers=p.publishers,
 	                           the_date=the_date)
-	ne = NaverRankingElasticGenerator(**p.elastic_conf, shard=p.elastic_shard)
+	# ne = NaverRankingElasticGenerator(**p.elastic_conf, shard=p.elastic_shard)
 
 	data = ranking_news.run()
-	ne.write(the_date=the_date, data = data)
+	# ne.write(the_date=the_date, data = data)
 
 	print_joblist()
 

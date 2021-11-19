@@ -3,10 +3,9 @@ from pathlib import Path
 import os
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from crawler.util.Singleton import Singleton
 from crawler.util.Logger import Logger
 
-class ChromeDriver(metaclass=Singleton):
+class ChromeDriver:
 
     @property
     def browser(self):

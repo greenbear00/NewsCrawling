@@ -88,6 +88,9 @@ class NaverRankingNews(CrawlerParser):
 			print()
 
 		self.logger.info(f"taken time: {time.time() - start_time}")
+
+		self.browser.close()
+
 		return publishers_set
 
 	def _load_rankingnews_list(self, publichser_name: str) -> list:

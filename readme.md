@@ -65,7 +65,7 @@ crhome driver url = https://sites.google.com/a/chromium.org/chromedriver/downloa
 
 ### 3. 실행
 ```
-python3 test/test_ranking_news_update_time.py
+python3 main/test_ranking_news_update_time.py
 ```
 
 
