@@ -67,7 +67,7 @@ crhome driver url = https://sites.google.com/a/chromium.org/chromedriver/downloa
 ```
 $ chmod u+x driver/*
 $ chmod u+x script/*
-$ ./script/naver_news_crawler.sh &
+$ nohup ./script/naver_news_crawler.sh &
 [1] 39282
 $
 
@@ -76,7 +76,7 @@ check PYTHONPATH=/box/jnd-crawler-tmp2:
 job start
 
 $
-$ ps -ef | grep run.sh
+$ ps -ef | grep sh
 as....+  39282   8979  0 15:10 pts/0    00:00:00 /bin/bash ./script/naver_news_crawler.sh
 as....+  39421   8979  0 15:10 pts/0    00:00:00 grep --color=auto run.sh
 
