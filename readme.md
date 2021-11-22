@@ -65,28 +65,37 @@ crhome driver url = https://sites.google.com/a/chromium.org/chromedriver/downloa
 
 ### 3. 실행
 ```
-[asmanager@jtbcv127 jnd-crawler-tmp2]$ chmod u+x driver/*
-[asmanager@jtbcv127 jnd-crawler-tmp2]$ chmod u+x script/*
-[asmanager@jtbcv127 jnd-crawler-tmp2]$ ./script/naver_news_crawler.sh &
+$ chmod u+x driver/*
+$ chmod u+x script/*
+$ ./script/naver_news_crawler.sh &
 [1] 39282
-[asmanager@jtbcv127 jnd-crawler-tmp2]$
+$
 
 check current path=/box/jnd-crawler-tmp2
 check PYTHONPATH=/box/jnd-crawler-tmp2:
 job start
 
-[asmanager@jtbcv127 jnd-crawler-tmp2]$
-[asmanager@jtbcv127 jnd-crawler-tmp2]$
-[asmanager@jtbcv127 jnd-crawler-tmp2]$
-[asmanager@jtbcv127 jnd-crawler-tmp2]$ ps -ef | grep run.sh
-asmanag+  39282   8979  0 15:10 pts/0    00:00:00 /bin/bash ./script/naver_news_crawler.sh
-asmanag+  39421   8979  0 15:10 pts/0    00:00:00 grep --color=auto run.sh
+$
+$ ps -ef | grep run.sh
+as....+  39282   8979  0 15:10 pts/0    00:00:00 /bin/bash ./script/naver_news_crawler.sh
+as....+  39421   8979  0 15:10 pts/0    00:00:00 grep --color=auto run.sh
 
 ```
 
 
 #### 참고: elastic field type text or keyword
-text에 대해서 anlayzer를 적용하여 분할 분석을 하기 위해서는 filed_data가 text로 되어 있어야 함
+text에 대해서 anlayzer를 적용하여 분할 분석을 하기 위해서는 filed_data가 text로 되어 있어야 하며, fileddata=true로 되어 있어야 함
+```
+# 특정 index의 fild name 및 그 속성 정의를 아래와 같이 해얗 ㅏㅁ.
+{
+  "properties": {
+    "news_nm": {    # 실제로 text가 들어감 예: "뉴스... 어쩌고 저쩌꼬..."
+      "type": "text",
+      "fielddata": true
+    }
+  }
+}
+```
 
 다만, 쿼리시 데이터 분석에 따른 메모리 소비가 많기 때문에 CircuitBreakingException이 발생
 -> 해결 방법: 클러스터에 노  추가
