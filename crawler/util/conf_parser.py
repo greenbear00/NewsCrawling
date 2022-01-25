@@ -8,29 +8,45 @@ import json
 
 class Parser(metaclass=Singleton):
     def __init__(self):
-        root_path = Path(__file__).parent.parent.parent
+        self.root_path = Path(__file__).parent.parent.parent
 
         self._conf_parser = ConfigParser()
-        self.logger = Logger(path=os.path.join(root_path, "logs"), file_name=type(self).__name__).logger
+        self.logger = Logger(file_name=type(self).__name__).logger
 
         self._news_ranking_url = None
         self._config = None
-        self._load_conf(conf_path=root_path)
-        self._load_build_conf(conf_path=root_path)
+        self._load_conf(conf_path=self.root_path)
+        self._load_build_conf(conf_path=self.root_path)
+
+    def _load_naver_ranking_conf(self):
+        broadcaster_urls = self._conf_parser.get("naver_ranking_news", "broadcaster_urls") if \
+            self._conf_parser.get("naver_ranking_news", "broadcaster_urls") else None
+        self._broadcaster_urls_li = broadcaster_urls.split('\n')
+        self.logger.info(f"naver broadcast_urls = {self.broadcaster_urls_li}")
+
+        press_urls = self._conf_parser.get("naver_ranking_news", "press_urls") if \
+            self._conf_parser.get("naver_ranking_news", "press_urls") else None
+        self._press_urls_li = press_urls.split('\n')
+        self.logger.info(f"naver press_urls = {self.press_urls_li}")
+
+    def _load_elastic_conf(self):
+        self._elastic_shard = self._conf_parser.getint("elastic", "ELASTIC_DEV_SHARD") if self._build_level == 'dev' \
+            else self._conf_parser.getint("elastic", "ELASTIC_PROD_SHARD")
+
+        self._index_naver_ranking_news = self._conf_parser.get("elastic", "INDEX_NAVER_RANKING_NEWS") if \
+            self._conf_parser.get("elastic", "INDEX_NAVER_RANKING_NEWS") else None
 
     def _load_conf(self, conf_path:Path):
         build_path = os.path.join(conf_path, *["conf", "build.ini"])
         if os.path.isfile(build_path):
             self.logger.info(f"load build.ini: {build_path} ")
+
             self._conf_parser.read(build_path)
-            self._naver_news_ranking_url = self._conf_parser.get("crawling", "naver_news_ranking_url") if \
-                self._conf_parser.get("crawling", "naver_news_ranking_url") else None
-            self._publishers = self._conf_parser.get("crawling", "publishers").replace(" ", "").split(",")
-
-
             self._build_level = self._conf_parser.get("build", "BUILD_LEVEL")
-            self._elastic_shard = self._conf_parser.get("elastic", "ELASTIC_DEV_SHARD") if self._build_level == 'dev' \
-                else self._conf_parser.get("elastic", "ELASTIC_PROD_SHARD")
+            self._proxy = self._conf_parser.get("proxy", "proxy") if self._conf_parser.get("proxy", "proxy") else None
+
+            self._load_naver_ranking_conf()
+            self._load_elastic_conf()
 
 
     def _load_build_conf(self, conf_path:Path):
@@ -41,6 +57,19 @@ class Parser(metaclass=Singleton):
 
             with open(config_file, 'r') as f:
                 self._config = json.load(f)
+
+
+    @property
+    def proxy(self):
+        return self._proxy
+
+    @property
+    def broadcaster_urls_li(self):
+        return self._broadcaster_urls_li
+
+    @property
+    def press_urls_li(self):
+        return self._press_urls_li
 
     @property
     def elastic_shard(self):
@@ -60,17 +89,5 @@ class Parser(metaclass=Singleton):
         return self._build_level
 
     @property
-    def publishers(self):
-        return self._publishers
-
-    @property
-    def naver_news_ranking_url(self):
-        return self._naver_news_ranking_url
-
-if __name__ == "__main__":
-    p = Parser()
-    print("naver news ranking_url: ", p.naver_news_ranking_url)
-    print("publishers: ", p.publishers)
-    print("build_level: ", p.build_level)
-
-    print(p.config)
+    def index_naver_ranking_news(self):
+        return self._index_naver_ranking_news

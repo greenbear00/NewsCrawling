@@ -6,13 +6,13 @@ from pathlib import Path
 
 class Logger(metaclass=Singleton):
 
-    # # log_path = os.path.join(path, 'logs', '{}_{}.log'.format(file, datetime.today().strftime('%Y%m%d')))
-    #         # log path: '/Users/jmac/project/jtbc_news_data/data-batch/main/logs/NewsSummary_20211018.log'
-    def __init__(self, path:Path=None, file_name:str=None):
+    def __init__(self, path:Path=None, file_name:str=None) -> object:
         if path is None:
             path = os.path.join(Path(__file__).parent.parent.parent, "logs")
             # print(path)
-            file_name = self.__class__.__name__
+            if file_name is None:
+                file_name = self.__class__.__name__
+
         os.makedirs(path, exist_ok=True)
 
         self._formatter = logging.Formatter(
@@ -20,7 +20,6 @@ class Logger(metaclass=Singleton):
 
         self._logger = logging.getLogger()
         self._logger.setLevel(logging.INFO)
-
         self._file_handler = logging.handlers.TimedRotatingFileHandler(
             filename=os.path.join(path, file_name),
             when="midnight",
@@ -40,22 +39,21 @@ class Logger(metaclass=Singleton):
 
         self._logger.info(f"log path : {os.path.join(path, file_name)}")
 
-
     @property
     def logger(self):
         return self._logger
 
 
-
-if __name__ == "__main__":
-
-    logger_factory = Logger(file_name="Logger")
-    logger = logger_factory.logger
-    logger.info(f"logger's id = {id(logger_factory)}")
-
-    path = Path(__file__).parent.parent.parent
-    logger_factory2 = Logger(path=os.path.join(path, "logs"), file_name="Logger")
-    logger2 = logger_factory2.logger
-    logger2.info(f"logger2's id = {id(logger_factory2)}")
-
+#
+# if __name__ == "__main__":
+#
+#     logger_factory = Logger(file_name="Logger")
+#     logger = logger_factory.logger
+#     logger.info(f"logger's id = {id(logger_factory)}")
+#
+#     path = Path(__file__).parent.parent.parent
+#     logger_factory2 = Logger(path=os.path.join(path, "logs"), file_name="Logger")
+#     logger2 = logger_factory2.logger
+#     logger2.info(f"logger2's id = {id(logger_factory2)}")
+#
 

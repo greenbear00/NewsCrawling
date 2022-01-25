@@ -1,39 +1,18 @@
 #!/bin/bash
 
-path=$(pwd)
+path=$PWD
 echo -e "\n\ncheck current path=$path"
 export PYTHONPATH=$path:$PYTHONPATH
 echo "check PYTHONPATH=$PYTHONPATH"
 
 
 echo "job start"
+echo -e "install -r requirements.txt --proxy http://192.168.1.139:3128\n\n"
+python3 -m venv venv
 source $path/venv/bin/activate
-python3 main/test_ranking_news_update_time.py
-deactivate
+pip3 install --upgrade pip
+pip3 install -r requirements.txt --proxy http://192.168.1.139:3128
 
-#function run_unittest()
-#{
-#  filename=$1
-#  echo -e "\n\n$path/test/$filename -v"
-#  python3 $path/test/$filename -v
-#}
-#
-#function check_fun_exit()
-#{
-#  filename=$1
-#  result=$2
-##  echo "filename $filename"
-##  echo "result $result"
-#  if [ $result -eq 0 ]
-#  then
-#    echo "$filename unittest is normal exit ($result)"
-#  else
-#      echo "$filename is abnormal exit ($result)"
-#      exit 1
-#  fi
-#}
-#
-#run_unittest main/job/test_TimebasedRunnerTest.py
-#check_fun_exit main/job/test_TimebasedRunnerTest.py $?
-#run_unittest main/job/test_PlatformNewsSummary.py
-#check_fun_exit main/job/test_PlatformNewsSummary.py $?
+echo -e "python3 crawler/scheduler/naver_ranking_news_job.py > /dev/null 2>&1 &\n\n"
+python3 crawler/scheduler/naver_ranking_news_job.py > /dev/null 2>&1 &
+deactivate

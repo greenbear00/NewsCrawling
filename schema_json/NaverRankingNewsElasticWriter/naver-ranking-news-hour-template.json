@@ -1,0 +1,48 @@
+{
+    "index_patterns": [
+        "origin-naver-ranking-news-hour-*"
+    ],
+    "template": {
+        "settings": {
+            "number_of_shards": null,
+            "number_of_replicas": 1
+        },
+        "mappings": {
+            "_source": {
+                "enabled": true
+            },
+            "properties": {
+                "news_nm": {
+                    "type": "keyword"
+                },
+                "news_nm_analyzer": {
+                    "type": "keyword"
+                },
+                "company": {
+                    "type": "keyword"
+                },
+                "ranking_num": {
+                    "type": "integer"
+                },
+                "url": {
+                    "type": "keyword"
+                },
+                "service_date": {
+                    "type": "date"
+                },
+                "reg_date": {
+                    "type": "date"
+                },
+                "update_date": {
+                    "type": "date"
+                },
+                "platform": {
+                    "type": "keyword"
+                }
+            }
+        },
+        "aliases": {
+
+        }
+    }
+}

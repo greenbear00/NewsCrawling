@@ -1,0 +1,75 @@
+{
+  "settings": {
+    "analysis": {
+        "analyzer": {
+            "my_analyzer": {
+                "type": "custom",
+                "tokenizer": "my-nori-tokenizer",
+                "filter":  [
+                  "uppercase",
+                  "synonym_filtering",
+                  "part_of_speech_stop_sp",
+                  "remove_duplicates",
+
+                  "stop_filtering"
+                  ]
+            }
+        },
+        "tokenizer": {
+            "my-nori-tokenizer": {
+                "type": "nori_tokenizer",
+                "decompound_mode": "none",
+                "discard_punctuation": "true",
+                "user_dictionary_rules": [
+                  "LG엔솔","방역패스", "쓰나미", "초강력", "대형마트",
+                    "형평성", "외무상", "정경심", "방역당국", "임신부",
+                    "이례적", "초과이익", "선순환", "LG전자", "메디페인", "녹취록", "카카오페이", "먹튀",
+                    "건진법사", "한무경", "기획전", "선관위원", "동물학대", "말기암", "이상반응", "계좌조회",
+                    "가짜뉴스", "소상공인", "Q&A", "K-9", "K-치킨", "K-컬쳐", "K-드라마", "K-문화", "울렁다리",
+                    "출렁다리", "e글e글", "CJ대한통운", "엠빅뉴스", "사적", "사의", "사측", "실손보험", "보험사",
+                  "콜센터", "상담사", "구로공단", "럭키백", "스타벅스", "오픈런", "확진자", "위중증", "아크부대", "상장폐지","바이오","개미",
+                  "미포함", "우크라이나", "서울시장", "생태탕", "명예훼손", "팬데믹", "엔데믹", "유체이탈", "효성티앤씨", "봉사활동", "공개활동",
+                  "요양시설", "비대면", "대면", "비노조", "초미세먼지", "미세먼지", "비만", "대사관", "돋보기", "단일화", "걸림돌", "등판", "국무부",
+                  "대피령", "실종자", "임명직", "알림", "다음주", "이번주", "일회용", "베어스타운", "혼자"
+                ]
+            }
+        },
+        "filter": {
+          "part_of_speech_stop_sp":{
+              "type":"nori_part_of_speech",
+              "stoptags":[
+                  "E",
+                  "IC",
+                  "J",
+                  "MAG", "MAJ", "MM",
+                  "SP", "SSC", "SSO", "SC", "SE",
+                  "XPN", "XSA", "XSN", "XSV",
+                  "UNA", "NA", "VSV",
+
+                  "SN", "VV", "MAG", "SP", "SSO", "VA", "NNB", "NNBC", "VX", "NP",  "NR",
+                  "VCP","VCN"
+              ]
+          },
+          "synonym_filtering":{
+              "type":"synonym",
+              "synonyms":[
+                "방역 패스,방역패스=>방역패스",
+                "초등생=>초등 학생",
+                "화산 폭발=>화산폭발",
+                "기름 유출=>기름유출",
+                "백신 접종=>백신접종",
+                "취재후 Talk,취재후 TALK=>취재후Talk",
+                "코로나19=>코로나",
+                "초미세먼지,미세먼지=>미세먼지"
+                  ]
+          },
+          "stop_filtering":{
+              "type":"stop",
+              "stop":[
+                    "%p", "때", "곳곳", "전", "후"
+                ]
+          }
+        }
+      }
+  }
+}
