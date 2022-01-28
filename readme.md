@@ -66,7 +66,7 @@ crhome driver url = https://sites.google.com/a/chromium.org/chromedriver/downloa
    - 이때, 알아서 index template를 생성
    - 또한 news_nm(뉴스 타이틀)을 분석하기 위해서 내부에 eleastic에 nori analyzer가 설치 되어 있어야 함.
    ```
-   # conf/dev-config.json
+   # conf/dev-config.json 참고
    {
       "elastic": {
          "hosts": "",
@@ -74,8 +74,6 @@ crhome driver url = https://sites.google.com/a/chromium.org/chromedriver/downloa
          "password": ""
       }
    }
-
-
 
    # elastic에 nori analysis를 설치
    $ sudo bin/elasticsearch-plugin install analysis-nori
