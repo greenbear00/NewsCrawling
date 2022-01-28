@@ -1,7 +1,9 @@
 # 뉴스 크롤링
 
 ## 개발 준비사항 
-### 1. install for selenium
+### 1. chrome driver 설치
+아래는 예제로 해놨지만, 실제 소스에서는 바로 manager로 크롬 드라이브 자동 인스톨로 변경함
+
 #### for osx
 osx 환경에서 cask, chrome driver를 install 해야 함
 참고: homebrew만 설치해서는 일반적으로 쓰는 GUI기반의 어플리케이션을 설치할 수 없으므로 cask를 설치해야 함
