@@ -4,6 +4,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 from crawler.util.Logger import Logger
 import sys
+import os
 
 
 # class ChromeDriver(metaclass=Singleton):
@@ -13,7 +14,7 @@ class ChromeDriver:
     def browser(self):
         return self._browser
 
-    def __init__(self, proxy:str=None):
+    def __init__(self, proxy:str=None, user_agent:str=None):
         self.logger = Logger(file_name=self.__class__.__name__).logger
         try:
 
@@ -22,7 +23,12 @@ class ChromeDriver:
 
             # to solve below: append user_agnet, window-size in headless
             # Message: element not interactable (Session info: headless chrome=80.0.3987.106)
-            user_agent = "Mozilla/5.0 (Linux; Android 9; SM-G975F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.83 Mobile Safari/537.36"
+            if user_agent is None:
+                user_agent = "Mozilla/5.0 (Linux; Android 9; SM-G975F) AppleWebKit/537.36 (KHTML, like Gecko) " \
+                             "Chrome/96.0.4664.110 Mobile Safari/537.36"
+                # user_agent = 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, ' \
+                #         'like Gecko) Chrome/96.0.4664.110 Mobile Safari/537.36'
+
             options.add_argument('user-agent=' + user_agent)
             options.add_argument('--window-size=1920,1080')
 
@@ -34,6 +40,8 @@ class ChromeDriver:
 
             self.logger.info(f"chrome set proxy = {proxy}")
             if proxy is not None:
+                os.environ["HTTP_PROXY"] = f"http://{proxy}"
+                os.environ["HTTPS_PROXY"] = f"http://{proxy}"
                 options.add_argument(f'----proxy-server=http://{proxy}')
 
             if sys.platform == "linux":

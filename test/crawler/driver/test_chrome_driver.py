@@ -23,12 +23,12 @@ class TestChromeDriver(unittest.TestCase):
 			# for local
 			d1 = ChromeDriver()
 		print("chrome driver create")
-		d1.browser.get(url="http://www.daum.net")
+		d1.browser.get(url="http://www.google.com")
 		from selenium.webdriver.common.by import By
-		print(d1.browser.find_element(By.XPATH, '/html/head/meta[10]'))
-		for n in range(0, 3):
-			print("....")
-			time.sleep(1)
+		print(d1.browser.find_element(By.XPATH, '/html/body/div[1]/div[2]/div/img'))
+		# for n in range(0, 3):
+		# 	print("....")
+		# 	time.sleep(1)
 		print(id(d1.browser))
 		print("chrome driver test done")
 
